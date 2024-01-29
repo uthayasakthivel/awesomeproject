@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 // import { showCart } from '../src/Features/Cart/cartSlice'
 import { useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
+import useFetch from '../custom_hooks/useFetch'
 
 const Product = () => {
     // const productsId = useSelector((state) => state.cart.product);
@@ -15,28 +16,16 @@ const Product = () => {
     // console.log(Array.isArray(productsId))
     // const count = useSelector((state) => state.cart.value)
     const url = 'https://fakestoreapi.com/products'
-    const [product, setProduct] = useState([])
 
+    const [product, loading] = useFetch(url)
     // const dispatch = useDispatch()
 
-    useEffect(() => {
-    fetch(url)
-        .then(res => res.json())
-        .then(data => setProduct(data))
-    }, [])
     return (
-        <SafeAreaView>
-            {/* <View>
-                <Text>{`price ${ProductPrice}`}</Text>
-            </View> */}
-            {/* <FlatList
-                data={product}
-                renderItem={({ item }) => (
-                    <Text>{productsId}</Text>
-                )}
-            /> */}
-
-            {/* <Text>{ }</Text> */}
+        <>
+            {
+                loading
+                    ? <Text>...Loading</Text>
+                    : <SafeAreaView>
             <FlatList
                 data={product}
                 renderItem={({ item }) => (
@@ -56,9 +45,13 @@ const Product = () => {
 
                 )
                 }
-            />
+                        />
+
             <Text>{`Total Price :  ${Number(TotalPrice).toFixed(2)}`}</Text>
         </SafeAreaView>
+            }
+        </>
+
     )
 }
 
