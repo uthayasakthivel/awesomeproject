@@ -7,25 +7,34 @@ const initialState = {
 }
 
 export const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
-    reducers: {
-        showCart: (state, action) => {
-            state.value += 1;
-            const { productId, produtPrice } = action.payload
-            if (!state.product[productId])
-                state.product[productId] = 1
-            else
-                state.product[productId] += 1
-
-            state.Total += produtPrice
-
-        },
-        // reset: (state) => { state.value = 0 }
+  name: 'cart',
+  initialState,
+  reducers: {
+    showCart: (state, action) => {
+      state.value += 1;
+      const {productId, produtPrice} = action.payload;
+      if (!state.product[productId]) state.product[productId] = 1;
+      else state.product[productId] += 1;
+      state.Total += produtPrice;
     },
-})
+    increment: (state, action) => {
+      // alert((state.product[action.payload] += 1));
+      // const {productId} = action.payload;
+      state.product[action.payload] += 1;
+    },
+    decrement: (state, action) => {
+      // alert((state.product[action.payload] += 1));
+      // const {productId} = action.payload;
+      state.product[action.payload] -= 1;
+    },
+    clearCart: state => {
+      state.product = {};
+      state.value = 0;
+      state.Total = 0;
+    },
+  },
+});
 
-// Action creators are generated for each case reducer function
-export const { showCart, decrement } = cartSlice.actions
+export const {showCart, increment, decrement, clearCart} = cartSlice.actions;
 
 export default cartSlice.reducer
