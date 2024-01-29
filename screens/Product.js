@@ -27,7 +27,7 @@ const Product = () => {
                         <Text style={styles.cardsDescription}>{item.description}</Text>
                         <Text style={styles.cardsPrice}>price : {item.price}</Text>
                         <Text style={styles.cardsTags}>Rating : {item.rating.rate} ({item.rating.count})</Text>
-                        <Button title='Add to Cart' onPress={() => (dispatch(showCart(item.id)))} />
+                        <Button title='Add to Cart' onPress={() => (dispatch(showCart({ productId: item.id, produtPrice: item.price })))} />
                     </View>
                 )}
             />

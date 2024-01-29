@@ -10,6 +10,7 @@ import { nanoid } from '@reduxjs/toolkit';
 const Product = () => {
     // const productsId = useSelector((state) => state.cart.product);
     const AllProducts = useSelector((state) => state.cart.product);
+    const TotalPrice = useSelector((state) => state.cart.Total);
     console.log(AllProducts)
     // console.log(Array.isArray(productsId))
     // const count = useSelector((state) => state.cart.value)
@@ -18,14 +19,15 @@ const Product = () => {
 
     // const dispatch = useDispatch()
 
+    useEffect(() => {
     fetch(url)
         .then(res => res.json())
         .then(data => setProduct(data))
-
+    }, [])
     return (
         <SafeAreaView>
             {/* <View>
-                <Text>{count}</Text>
+                <Text>{`price ${ProductPrice}`}</Text>
             </View> */}
             {/* <FlatList
                 data={product}
@@ -38,17 +40,6 @@ const Product = () => {
             <FlatList
                 data={product}
                 renderItem={({ item }) => (
-                    // Object.keys(person).map(()=>{}) === item.id && (
-                    //     <View style={styles.cards}>
-                    //         <Text style={styles.cardsTitle}>{item.title}</Text>
-                    //         <Image source={{ uri: item.image }} style={{ width: 300, height: 300, objectFit: 'cover' }} />
-                    //         <Text style={styles.cardsDescription}>{item.description}</Text>
-                    //         <Text style={styles.cardsPrice}>price : {item.price}</Text>
-                    //         <Text style={styles.cardsTags}>Rating : {item.rating.rate} ({item.rating.count})</Text>
-                    //         <Button title='Add to Cart' onPress={() => (dispatch(showCart(item.id)))} />
-                    //     </View>
-                    // ))
-
                     Object.keys(AllProducts).map((EachProductKey) => (
                         Number(EachProductKey) === item.id && (
 
@@ -56,8 +47,8 @@ const Product = () => {
                                 <Image source={{ uri: item.image }} style={{ width: 50, height: 50, objectFit: 'cover' }} />
                                 <Text style={styles.cardsTitle}>{item.title}</Text>
                                 {/* <Text style={styles.cardsDescription}>{item.description}</Text> */}
-                                <Text>{`Count : ${AllProducts[item.id]}`}</Text>
-                                <Text style={styles.cardsPrice}> = {item.price}</Text>
+                                <Text>{`Count : ${AllProducts[item.id]}`} </Text>
+                                <Text style={styles.cardsPrice}> {`ProductPrice : ${AllProducts[item.id] * item.price}`} </Text>
                                 {/* <Text style={styles.cardsTags}>Rating : {item.rating.rate} ({item.rating.count})</Text> */}
                             </View>
                         )
@@ -66,6 +57,7 @@ const Product = () => {
                 )
                 }
             />
+            <Text>{`Total Price :  ${Number(TotalPrice).toFixed(2)}`}</Text>
         </SafeAreaView>
     )
 }
